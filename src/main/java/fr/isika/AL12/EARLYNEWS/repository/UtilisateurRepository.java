@@ -16,7 +16,9 @@ Il existe 3 méthodes nécessaires qui JpaRepositoryprennent en charge*/
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
 	Optional<Utilisateur> findByUsername(String username);
+	
 	Boolean existsByUsername(String username);
+	
 	Boolean existsByEmail(String email);
 	
 	

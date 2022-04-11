@@ -46,6 +46,7 @@ public class UtilsiateurDetailsImpl implements UserDetails {
 		List<GrantedAuthority> authorities = utilisateur.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
 				.collect(Collectors.toList());
+		
 		return new UtilsiateurDetailsImpl(
 				utilisateur.getId(), 
 				utilisateur.getUsername(), 

@@ -43,10 +43,10 @@ import fr.isika.AL12.EARLYNEWS.securite.service.UtilsiateurDetailsImpl;
 /*les contrôleurs gèrent les demandes d'inscription/de 
  * connexion et les demandes autorisées.*/
 
-@CrossOrigin(origins ="*", maxAge= 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-public class Authenti_Controller {
+public class AuthentiController {
 	
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -66,14 +66,13 @@ public class Authenti_Controller {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
 		
-		Authentication authentification = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-						loginRequest.getPassword()));
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		
-		SecurityContextHolder.getContext().setAuthentication(authentification);
-		String jwt = jwtUtils.genererJwtToken(authentification);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = jwtUtils.genererJwtToken(authentication);
 		
-		UtilsiateurDetailsImpl utilisateurDetails = (UtilsiateurDetailsImpl) authentification.getPrincipal();
+		UtilsiateurDetailsImpl utilisateurDetails = (UtilsiateurDetailsImpl) authentication.getPrincipal();	
 		List<String> roles = utilisateurDetails.getAuthorities().stream()
 				.map(item -> item.getAuthority())
 				.collect(Collectors.toList());
@@ -113,6 +112,21 @@ public class Authenti_Controller {
 			Role userRole = roleRepository.findByName(EnumRole.ROLE_USER)
 					.orElseThrow(() -> new RuntimeException("Erreur : role introuvable."));
 			roles.add(userRole);
+		} else {
+			strRoles.forEach(role ->{
+				switch(role) {
+				case "admin":
+					Role adminRole = roleRepository.findByName(EnumRole.ROLE_ADMIN)
+							.orElseThrow(() -> new RuntimeException("Erreur : role introuvable"));
+					roles.add(adminRole);
+					
+					break;
+				default: 
+					Role userRole = roleRepository.findByName(EnumRole.ROLE_USER)
+							.orElseThrow(() -> new RuntimeException("Erreur : role introuvable"));
+					roles.add(userRole);
+				}
+			});
 		}
 		
 	utilisateur.setRoles(roles);

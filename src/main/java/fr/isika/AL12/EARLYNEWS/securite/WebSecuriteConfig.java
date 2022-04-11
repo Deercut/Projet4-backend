@@ -30,11 +30,13 @@ import fr.isika.AL12.EARLYNEWS.securite.service.UtilisateurDetailsServiceImpl;
  *
  */
 
+/*assure la sécurité AOP sur les méthodes. Il permet @PreAuthorize, @PostAuthorize, il prend également en charge JSR-250 */
+/*@EnableWebSecurity permet à Spring de trouver et d'appliquer automatiquement la classe à la sécurité Web globale.*/
+
 @Configuration
 @EnableWebSecurity
-/*@EnableWebSecurity permet à Spring de trouver et d'appliquer automatiquement la classe à la sécurité Web globale.*/
 @EnableGlobalMethodSecurity(
-/*assure la sécurité AOP sur les méthodes. Il permet @PreAuthorize, @PostAuthorize, il prend également en charge JSR-250 */
+
 		 //securedEnabled = true,
 		 //jsr250Enabled = true,
 		prePostEnabled = true)
@@ -70,11 +72,11 @@ public class WebSecuriteConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http)throws Exception{
 		http.cors().and().csrf().disable()
-		.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-		.antMatchers("/api/test/**").permitAll()
-		.anyRequest().authenticated();
+			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
+			.antMatchers("/api/test/**").permitAll()
+			.anyRequest().authenticated();
 		
 		http.addFilterBefore(authentificationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
