@@ -32,6 +32,6 @@ public class AuthentiPointEntreeJwt implements AuthenticationEntryPoint {
 	/*AuthEntryPointJwtclasse qui implémente l' AuthenticationEntryPointinterface
 	 * Commence(), méthode sera déclenchée chaque fois qu'un utilisateur non authentifié demandera une 
 	 *  ressource HTTP sécurisée et qu'un an AuthenticationExceptionsera lancé.*/
-	
+	//Juste un petit test
 	
 }
