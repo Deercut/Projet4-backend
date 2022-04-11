@@ -1,0 +1,112 @@
+{"properties": [
+  {
+    "name": "bezkoder.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'bezkoder.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtCookieName'"
+  },
+  {
+    "name": "earlynews.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtSecret'"
+  },
+  {
+    "name": "earlynews.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtSecret'"
+  },
+  {
+    "name": "earlynews.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtSecret'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  },
+  {
+    "name": "earlynews.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtSecret'"
+  },
+  {
+    "name": "earlynews.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtSecret'"
+  },
+  {
+    "name": "earlynews.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtSecret'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  },
+  {
+    "name": "earlynews.app.jwtExpiration",
+    "type": "java.lang.String",
+    "description": "A description for 'earlynews.app.jwtExpiration'"
+  }
+]}
