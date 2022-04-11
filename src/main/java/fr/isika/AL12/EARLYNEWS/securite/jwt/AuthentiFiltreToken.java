@@ -44,8 +44,11 @@ public class AuthentiFiltreToken extends OncePerRequestFilter {
 /*- obtenir JWTde l'en-tête Authorization (en supprimant le préfixe Bearer)*/
 			String jwt = parseJwt(request);
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
+				
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
+				
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+				
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -66,7 +69,9 @@ public class AuthentiFiltreToken extends OncePerRequestFilter {
 	}
 
 	private String parseJwt(HttpServletRequest request) {
+		
 		String headerAuth = request.getHeader("Authorization");
+		
 		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer")) {
 			return headerAuth.substring(7, headerAuth.length());
 		}

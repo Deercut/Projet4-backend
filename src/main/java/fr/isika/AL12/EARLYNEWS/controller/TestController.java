@@ -24,5 +24,11 @@ public class TestController {
 	public String utilisateurAccess() {
 		return "Utilisateur Contenu";
 	}
+	
+	@GetMapping("/admin")
+	@PreAuthorize("hasRole('ADMIN')")
+	public String adminAccess() {
+		return "Ici c'est juste pour tester.";
+	}
 
 }

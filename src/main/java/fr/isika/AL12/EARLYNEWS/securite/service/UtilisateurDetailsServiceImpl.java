@@ -29,6 +29,7 @@ public class UtilisateurDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Utilisateur utilisateur = utilisateurRepository.findByUsername(username)
 				.orElseThrow(()-> new UsernameNotFoundException("Utilisateur introuvable avec le nom: " + username));
+		
 		return UtilsiateurDetailsImpl.build(utilisateur);
 		
 /*On vas construire un UtilisateurDetails via la méthode build().*/
