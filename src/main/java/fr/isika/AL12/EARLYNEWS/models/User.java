@@ -17,47 +17,42 @@ Il comporte 5 champs : identifiant, nom d'utilisateur, email, mot de passe, rôl
  */
 
 @Entity
-@Table(name = "utilisateur", uniqueConstraints = { 
-		@UniqueConstraint(columnNames = "username"),
-		@UniqueConstraint(columnNames = "email") })
-
-
-public class Utilisateur {
-
+@Table(	name = "user", 
+		uniqueConstraints = { 
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email") 
+		})
+public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank
-	@Size(max = 100)
+	@Size(max = 20)
 	private String username;
 
 	@NotBlank
-	@Size(max = 100)
+	@Size(max = 50)
 	@Email
 	private String email;
 
 	@NotBlank
 	@Size(max = 120)
 	private String password;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "utilisateur_roles", 
-	
-		joinColumns = @JoinColumn(name = "utilisateur_id"), 
-		inverseJoinColumns = @JoinColumn(name = "roles_id"))
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public Utilisateur() {
-		
+	public User() {
 	}
-	
-	public Utilisateur(String username,String email,String password) {
+
+	public User(String username, String email, String password) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		
-		
 	}
 
 	public Long getId() {
@@ -99,6 +94,4 @@ public class Utilisateur {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-
-	
 }

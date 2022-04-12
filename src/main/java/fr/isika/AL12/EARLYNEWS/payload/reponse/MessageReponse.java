@@ -4,12 +4,11 @@ package fr.isika.AL12.EARLYNEWS.payload.reponse;
  *
  */
 public class MessageReponse {
-
 	private String message;
 
 	public MessageReponse(String message) {
-		this.message = message;
-	}
+	    this.message = message;
+	  }
 
 	public String getMessage() {
 		return message;
@@ -18,7 +17,4 @@ public class MessageReponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
-	
 }

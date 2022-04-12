@@ -13,22 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/test")
 public class TestController {
-	
 	@GetMapping("/all")
 	public String allAccess() {
-		return "En cours de construction...";
+		return "Site. En cours de construction...";
 	}
 	
 	@GetMapping("/user")
-	@PreAuthorize("hasRole('USER')")
-	public String utilisateurAccess() {
-		return "Utilisateur Contenu";
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+	public String userAccess() {
+		return "Utilisateur content";
 	}
-	
+
 	@GetMapping("/admin")
 	@PreAuthorize("hasRole('ADMIN')")
 	public String adminAccess() {
-		return "Ici c'est juste pour tester.";
+		return "En cours de construction...";
 	}
-
 }

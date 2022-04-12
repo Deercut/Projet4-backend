@@ -21,37 +21,38 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import fr.isika.AL12.EARLYNEWS.securite.service.UtilisateurDetailsServiceImpl;
+import fr.isika.AL12.EARLYNEWS.securite.service.UserDetailsServiceImpl;
+
 
 
 /*Filtre qui vas s'exécute une fois par requête. 
  * On vas créer une classe AuthentiFiltreToken
  * qui étends OncePerRequestFilter */
 
-public class AuthentiFiltreToken extends OncePerRequestFilter {
+/*- obtenir JWTde l'en-tête Authorization (en supprimant le préfixe Bearer)*/
 
+public class AuthTokenFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtUtils jwtUtils;
 
 	@Autowired
-	private UtilisateurDetailsServiceImpl userDetailsService;
-	private static final Logger logger = LoggerFactory.getLogger(AuthentiFiltreToken.class);
+	private UserDetailsServiceImpl userDetailsService;
+
+	private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		try {
-/*- obtenir JWTde l'en-tête Authorization (en supprimant le préfixe Bearer)*/
 			String jwt = parseJwt(request);
 			if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-				
 				String username = jwtUtils.getUserNameFromJwtToken(jwt);
-				
+
 				UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-				
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 
 /*si la requête a JWT, la valider, l'analyser - à partir de username, 
@@ -63,18 +64,19 @@ public class AuthentiFiltreToken extends OncePerRequestFilter {
 			}
 
 		} catch (Exception e) {
-			logger.error("Impossible de set l'utilisateur authentification: {}", e);
+			logger.error("Cannot set user authentication: {}", e);
 		}
+
 		filterChain.doFilter(request, response);
 	}
 
 	private String parseJwt(HttpServletRequest request) {
-		
 		String headerAuth = request.getHeader("Authorization");
-		
-		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer")) {
+
+		if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
 			return headerAuth.substring(7, headerAuth.length());
 		}
+
 		return null;
 	}
 }

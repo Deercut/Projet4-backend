@@ -14,12 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
-import fr.isika.AL12.EARLYNEWS.securite.jwt.AuthentiFiltreToken;
-import fr.isika.AL12.EARLYNEWS.securite.jwt.AuthentiPointEntreeJwt;
-import fr.isika.AL12.EARLYNEWS.securite.service.UtilisateurDetailsServiceImpl;
-/*– L'implémentation de UserDetailsServicesera utilisée pour la configuration 
- * DaoAuthenticationProvider par AuthenticationManagerBuilder.userDetailsService()méthode.*/
+import fr.isika.AL12.EARLYNEWS.securite.jwt.AuthEntryPointJwt;
+import fr.isika.AL12.EARLYNEWS.securite.jwt.AuthTokenFilter;
+import fr.isika.AL12.EARLYNEWS.securite.service.UserDetailsServiceImpl;
 
 /* PasswordEncoderpour le DaoAuthenticationProvider. Sinon, il utilisera du texte brut.*/
 
@@ -36,50 +33,49 @@ import fr.isika.AL12.EARLYNEWS.securite.service.UtilisateurDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-
-		 //securedEnabled = true,
-		 //jsr250Enabled = true,
+		// securedEnabled = true,
+		// jsr250Enabled = true,
 		prePostEnabled = true)
-public class WebSecuriteConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	@Autowired
+	UserDetailsServiceImpl userDetailsService;
 
 	@Autowired
-	 UtilisateurDetailsServiceImpl userDetailsService;
-	
-	@Autowired
-	private AuthentiPointEntreeJwt unauthorizedHandler;
-	
+	private AuthEntryPointJwt unauthorizedHandler;
+
 	@Bean
-	public AuthentiFiltreToken authentificationJwtTokenFilter() {
-		return new AuthentiFiltreToken();
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
 	}
-	
+
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
-	
+
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
-	
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Override
-	protected void configure(HttpSecurity http)throws Exception{
+	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.anyRequest().authenticated();
-		
-		http.addFilterBefore(authentificationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
+
 	
 	/*la méthode configure(HttpSecurity http) de l' WebSecurityConfigurerAdapterinterface. 
 	 * Indique à Spring Security comment nous configurons CORS et CSRF, 

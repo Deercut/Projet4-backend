@@ -1,6 +1,6 @@
 package fr.isika.AL12.EARLYNEWS.models;
 
-public enum EnumRole {
+public enum ERole {
 
 	ROLE_USER, 
 	ROLE_ADMIN

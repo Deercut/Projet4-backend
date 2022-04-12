@@ -11,26 +11,26 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import fr.isika.AL12.EARLYNEWS.models.Utilisateur;
-import fr.isika.AL12.EARLYNEWS.repository.UtilisateurRepository;
+import fr.isika.AL12.EARLYNEWS.models.User;
+import fr.isika.AL12.EARLYNEWS.repository.UserRepository;
+
 
 
 /*On a objet utilisateur entièrement personnalisé à l'aide de UserRepository,
  *  puis nous construisons un UserDetailsobjet à l'aide de la méthode statique build().*/
 
 @Service
-public class UtilisateurDetailsServiceImpl implements UserDetailsService {
-
+public class UserDetailsServiceImpl implements UserDetailsService {
 	@Autowired
-	UtilisateurRepository utilisateurRepository;
+	UserRepository userRepository;
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Utilisateur utilisateur = utilisateurRepository.findByUsername(username)
-				.orElseThrow(()-> new UsernameNotFoundException("Utilisateur introuvable avec le nom: " + username));
-		
-		return UtilsiateurDetailsImpl.build(utilisateur);
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UsernameNotFoundException("Introuvable à ce nom: " + username));
+
+		return UserDetailsImpl.build(user);
 		
 /*On vas construire un UtilisateurDetails via la méthode build().*/
 	}

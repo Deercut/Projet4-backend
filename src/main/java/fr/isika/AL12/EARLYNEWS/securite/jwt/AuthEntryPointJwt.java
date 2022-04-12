@@ -16,17 +16,18 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthentiPointEntreeJwt implements AuthenticationEntryPoint {
+public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
-	private static final Logger logger = LoggerFactory.getLogger(AuthentiPointEntreeJwt.class);
+	private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		logger.error("Unauthorized error: {}", authException.getMessage());
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error: Unauthorized");
-		
 	}
+
+}
 	
 	
 	/*AuthEntryPointJwtclasse qui implémente l' AuthenticationEntryPointinterface
@@ -34,4 +35,3 @@ public class AuthentiPointEntreeJwt implements AuthenticationEntryPoint {
 	 *  ressource HTTP sécurisée et qu'un an AuthenticationExceptionsera lancé.*/
 	//Juste un petit test
 	
-}
