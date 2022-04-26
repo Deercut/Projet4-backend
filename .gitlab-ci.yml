@@ -1,0 +1,15 @@
+stages:
+  - build
+  - deploy
+build-job:
+  stage: build
+  image: maven:latest
+  script:
+    - mvn clean package
+deploy-job:
+  stage: deploy
+  before_script:
+    - gem install faraday -v 1.8.0
+    - gem install dpl
+  script:
+    - dpl --provider=heroku --app=$HEROKU_NAME_APP --api_key=$HEROKU_API_KEY
