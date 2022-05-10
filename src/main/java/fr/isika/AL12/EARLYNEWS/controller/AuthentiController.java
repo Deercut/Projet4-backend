@@ -103,8 +103,8 @@ public class AuthentiController {
 		
 		//Creer un nouveau compte utilisateur
 		User utilisateur = new User(singUpRequete.getUsername(),
-												   singUpRequete.getEmail(),
-												   encoder.encode(singUpRequete.getPassword()));
+				singUpRequete.getEmail(),
+				encoder.encode(singUpRequete.getPassword()));
 		
 		Set<String> strRoles = singUpRequete.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -135,6 +135,26 @@ public class AuthentiController {
 		
 		
 	}
+	
+	
+	
+	
+	
+	
+	/*
+	 * Préparation pour la possibilié à l'admin de pouvoir supprimer un ou plusieurs user.
+	 * 
+	 * @GetMapping(path = "/allUser")
+	public List<User>all(){
+		List<User> user = userRepository.findAll();
+		return user;
+	}
+	
+	@GetMapping(path = "/deleteUser{id"}
+	public void deleteById(@PathVariable Long id){
+			userRepository.deleteById(id);
+		}
+	 */
 	
 	
 	

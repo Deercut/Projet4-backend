@@ -3,6 +3,7 @@ package fr.isika.AL12.EARLYNEWS.securite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -27,7 +28,9 @@ import fr.isika.AL12.EARLYNEWS.securite.service.UserDetailsServiceImpl;
  *
  */
 
-/*assure la sécurité AOP sur les méthodes. Il permet @PreAuthorize, @PostAuthorize, il prend également en charge JSR-250 */
+/*
+ * @EnableGlobalMethodSecurity
+ * assure la sécurité AOP sur les méthodes. Il permet @PreAuthorize, @PostAuthorize, il prend également en charge JSR-250 */
 /*@EnableWebSecurity permet à Spring de trouver et d'appliquer automatiquement la classe à la sécurité Web globale.*/
 
 @Configuration
@@ -64,6 +67,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	//Aide à gérer les problèmes de cors et csrf((Cross-Site Request Forgery))
+	//crsf = type de vulnérabilité des services d'authentification web.
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
@@ -71,7 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
-			.anyRequest().authenticated();
+			.antMatchers(HttpMethod.OPTIONS, "/**")
+			.permitAll()
+			.anyRequest().authenticated().and().httpBasic();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
